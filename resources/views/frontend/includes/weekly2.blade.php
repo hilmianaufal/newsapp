@@ -21,7 +21,7 @@
                             
                         <div class="weekly2-single" data-aos="flip-right">
                             <div class="weekly2-img">
-                                <img src="{{ asset('uploads/' . $art->gambar_artikel) }}" alt="">
+                                <img src="{{ asset($art->gambar_artikel) }}" alt="">
                             </div>
                             <div class="weekly2-caption" data-aos="fade-down">
                                 <span class="color1">{{ $art->kategori->nama_kategori }}</span>

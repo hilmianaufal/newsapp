@@ -58,7 +58,7 @@
 													<td>{{ $art->kategori->nama_kategori }}</td>
 													<td>{{ $art->users->nama }}</td>
 													<td><span class="badge {{ $art->is_actived == 1 ? "bg-success" : "bg-primary" }} text-white">{{ $art->is_actived == 1 ? 'Published' : 'Draft' }}</span></td>
-                                                    <td><img src="{{ asset('uploads/' . $art->gambar_artikel) }}" alt="" width="90"></td>
+                                                    <td><img src="{{ asset($art->gambar_artikel) }}" alt="" width="90"></td>
 													<td>
 														<div class="form-button-action">
                                                             <a type="button" href="{{ route('artikel.edit', $art->id) }}"  title="edit" class="btn btn-link btn-primary" >

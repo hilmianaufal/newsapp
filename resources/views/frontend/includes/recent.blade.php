@@ -7,7 +7,7 @@
                 @foreach ($berita6 as $article)
                 <div class="col-sm-6 col-lg-4">
                     <div class="card h-100 shadow-sm border-0" data-aos="flip-left">
-                        <img src="{{ asset('uploads/' . $article->gambar_artikel) }}" class="card-img-top rounded-top" alt="{{ $article->judul }}" style="height: 120px; object-fit: cover;">
+                        <img src="{{ asset($article->gambar_artikel) }}" class="card-img-top rounded-top" alt="{{ $article->judul }}" style="height: 120px; object-fit: cover;">
                         <div class="card-body p-2" data-aos="fade-down">
                             <h6 class="card-title mb-1" style="font-size: 0.9rem">
                                 <a href="{{ route('artikel.show', $article->slug) }}" class="text-decoration-none text-dark">

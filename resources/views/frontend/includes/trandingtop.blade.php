@@ -10,7 +10,7 @@
                                 @foreach ($slide as $key => $item)
                                 <div class="carousel-item {{ $key == 0 ? 'active' : '' }}" data-aos="flip-right">
                                     <a href="{{ $item->link }}">
-                                        <img src="{{ asset('uploads/' . $item->gambar_slide) }}" class="d-block w-100" alt="{{ $item->judul }}">
+                                        <img src="{{ asset($item->gambar_slide) }}" class="d-block w-100" alt="{{ $item->judul }}">
                                     </a>
                                     <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-3 rounded">
                                         <h2><a href="{{ $item->link}}" class="text-white text-decoration-none">{{ $item->judul_slide }}</a></h2>
@@ -51,7 +51,7 @@
                         <div id="beritaSlider" class="d-flex overflow-hidden gap-3">
                             @foreach($berita6 as $art)
                             <div class="card flex-shrink-0" style="width: 250px;">
-                                <img src="{{ asset('uploads/' . $art->gambar_artikel) }}" class="card-img-top" style="height: 150px; object-fit: cover;" alt="">
+                                <img src="{{ asset($art->gambar_artikel) }}" class="card-img-top" style="height: 150px; object-fit: cover;" alt="">
                                 <div class="card-body">
                                     <span class="badge bg-primary mb-1">{{ $art->kategori->nama_kategori }}</span>
                                     <h6 class="card-title"><a href="/detail/{{ $art->slug }}" class="text-decoration-none">{{ $art->judul }}</a></h6>
@@ -73,7 +73,7 @@
                     <div class="card-body">
                         @foreach ($berita5 as $item)
                             <div class="d-flex mb-3" data-aos="fade-left">
-                                <img src="{{ asset('uploads/' . $item->gambar_artikel) }}" style="width: 150px; height: 100px; object-fit: cover;" class="me-3 rounded" alt="{{ $item->judul }}">
+                                <img src="{{ asset($item->gambar_artikel) }}" style="width: 150px; height: 100px; object-fit: cover;" class="me-3 rounded" alt="{{ $item->judul }}">
                                 <div>
                                     <span class="badge bg-secondary">{{ $item->kategori->nama_kategori }}</span>
                                     <h6 class="mb-1 mt-1">

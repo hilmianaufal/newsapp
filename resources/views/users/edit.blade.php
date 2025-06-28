@@ -51,9 +51,9 @@
                 <div class="mb-3">
                     <label for="avatar" class="form-label">Foto Profil</label><br>
                     @if ($user->avatar)
-                        <img src="{{ asset('storage/' . $user->avatar) }}" alt="avatar" width="100" class="mb-2 rounded">
+                        <img src="{{ asset($user->avatar) }}" alt="avatar" width="100" class="mb-2 rounded">
+                        <input class="form-control" type="file" name="avatar" id="avatar">
                     @endif
-                    <input class="form-control" type="file" name="avatar" id="avatar">
                 </div>
 
                 <hr>

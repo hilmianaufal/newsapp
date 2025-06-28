@@ -61,7 +61,7 @@
                                                             <span class="badge bg-warning text-white">Draft</span>
                                                         @endif
                                                     </td>
-                                                    <td class="text-center "><img src="{{ asset('uploads/' . $ply->gambar_iklan) }}" alt="" width="90"></td>
+                                                    <td class="text-center "><img src="{{ asset($ply->gambar_iklan) }}" alt="" width="90"></td>
 													<td>
 														<div class="form-button-action">
                                                             <a type="button" href="{{ route('iklan.edit', $ply->id) }}"  title="edit" class="btn btn-link btn-primary" >

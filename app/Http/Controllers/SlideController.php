@@ -4,133 +4,99 @@ namespace App\Http\Controllers;
 
 use App\Models\Slide;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class SlideController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $slide = Slide::all();
         return view('slide.index', compact('slide'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('slide.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $this->validate($request, [
-            'judul_slide' => 'required||min:5',
-            'gambar_slide' => 'mimes:jpg,jpeg,jfif,png'
+            'judul_slide' => 'required|min:5',
+            'gambar_slide' => 'nullable|image|mimes:jpg,jpeg,jfif,png|max:2048'
         ]);
 
-        if(!empty($request->file('gambar_slide'))){
-            $data = $request->all();
-            $data['gambar_slide'] = $request->file('gambar_slide')->store('slide');
+        $data = $request->all();
 
-            Slide::create($data);
-        } else {
-            $data = $request->all();
-            Slide::create($data);
-
+        if ($request->hasFile('gambar_slide')) {
+            $file = $request->file('gambar_slide');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('uploads/slide'), $filename);
+            $data['gambar_slide'] = 'uploads/slide/' . $filename;
         }
+
+        Slide::create($data);
         Alert::success('Berhasil', 'Slide Berhasil Ditambahkan');
-        return redirect()->route('slide.index')->with('success', 'Slide Berhasil Di Tambahkan');
-
-
+        return redirect()->route('slide.index')->with('success', 'Slide Berhasil Ditambahkan');
     }
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $slide = Slide::find($id);
-
         return view('slide.edit', compact('slide'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'judul_slide' => 'required',
             'link' => 'required'
         ]);
 
-        if (!empty($request->file('gambar_slide'))) {
+        $slide = Slide::find($id);
 
-            $data = Slide::find($id);
-            $data->update([
-                'judul_slide' => $request->judul_slide,
-                'link' => $request->link,
-                'status' => $request->status,
-                'gambar_slide' => $request->file('gambar_slide')->store('slide')
-
-            ]);
-        } else {
-            $data = Slide::find($id);
-            $data->update([
-                'judul_slide' => $request->judul_slide,
-                'link' => $request->link,
-                'status' => $request->status,
-
-
-            ]);
+        if (!$slide) {
+            Alert::error('Gagal', 'Slide tidak ditemukan');
+            return redirect()->route('slide.index');
         }
+
+        if ($request->hasFile('gambar_slide')) {
+            // Hapus gambar lama jika ada
+            if ($slide->gambar_slide && file_exists(public_path($slide->gambar_slide))) {
+                unlink(public_path($slide->gambar_slide));
+            }
+
+            $file = $request->file('gambar_slide');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('uploads/slide'), $filename);
+            $slide->gambar_slide = 'uploads/slide/' . $filename;
+        }
+
+        $slide->update([
+            'judul_slide' => $request->judul_slide,
+            'link' => $request->link,
+            'status' => $request->status,
+            'gambar_slide' => $slide->gambar_slide // tetap pakai lama jika tidak diubah
+        ]);
+
         Alert::success('Berhasil', 'Slide Berhasil Diupdate');
-         return redirect()->route('slide.index')->with('success', 'Slide Berhasil Di Update');
+        return redirect()->route('slide.index')->with('success', 'Slide Berhasil Diupdate');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Slide $slide)
     {
+        // Hapus gambar dari public jika ada
+        if ($slide->gambar_slide && file_exists(public_path($slide->gambar_slide))) {
+            unlink(public_path($slide->gambar_slide));
+        }
+
         $slide->delete();
-        Storage::delete($slide->gambar_slide);
         Alert::success('Berhasil', 'Slide Berhasil Dihapus');
-        return redirect()->route('slide.index')->with('danger', 'Slide Berhasil Di Hapus');
+        return redirect()->route('slide.index')->with('danger', 'Slide Berhasil Dihapus');
     }
 }

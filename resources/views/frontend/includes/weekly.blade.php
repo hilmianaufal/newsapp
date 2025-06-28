@@ -18,7 +18,7 @@
                 
             <div class="col-md-6 col-lg-3" data-aos="fade-up">
                 <div class="card border-0 shadow-sm h-100 rounded-4 overflow-hidden">
-                    <a href="/detail/{{ $item->slug }}"><img src="{{ asset('uploads/' . $item->gambar_artikel) }}" class="card-img-top object-fit-cover" alt="News 1" style="height: 180px;"> </a>
+                    <a href="/detail/{{ $item->slug }}"><img src="{{ asset($item->gambar_artikel) }}" class="card-img-top object-fit-cover" alt="News 1" style="height: 180px;"> </a>
                     <div class="card-body">
                         <span class="badge bg-danger mb-2">{{ $item->kategori->nama_kategori }}</span>
                         <h6 class="card-title">{{ $item->judul }}</h6>

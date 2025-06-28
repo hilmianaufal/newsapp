@@ -62,19 +62,25 @@ public function store(Request $request)
         'body' => 'required',
         'kategori_id' => 'required|exists:kategoris,id',
         'gambar_artikel' => 'required|image|mimes:jpg,jpeg,png|max:2048',
-        'tags' => 'array|nullable', // Validasi array tag ID
-        'tags.*' => 'exists:tags,id' // Setiap elemen harus valid
+        'tags' => 'array|nullable',
+        'tags.*' => 'exists:tags,id'
     ]);
 
     $data = $request->all();
     $data['slug'] = Str::slug($request->judul);
-    $data['gambar_artikel'] = $request->file('gambar_artikel')->store('artikel');
     $data['user_id'] = Auth::id();
     $data['views'] = 0;
 
+    // Simpan gambar ke folder public/uploads/artikel
+    if ($request->hasFile('gambar_artikel')) {
+        $file = $request->file('gambar_artikel');
+        $filename = time() . '_' . $file->getClientOriginalName();
+        $file->move(public_path('uploads/artikel'), $filename);
+        $data['gambar_artikel'] = 'uploads/artikel/' . $filename;
+    }
+
     $artikel = Artikel::create($data);
 
-    // Simpan relasi ke tabel pivot jika ada
     if ($request->has('tags')) {
         $artikel->tags()->attach($request->tags);
     }
@@ -120,29 +126,29 @@ public function store(Request $request)
 {
     $artikel = Artikel::find($id);
 
-    if (empty($request->file('gambar_artikel'))) {
-        $artikel->update([
-            'judul' => $request->judul,
-            'body' => $request->body,
-            'slug' => Str::slug($request->judul),
-            'kategori_id' => $request->kategori_id,
-            'is_actived' => $request->is_actived,
-            'user_id' => Auth::id()
-        ]);
-    } else {
-        Storage::delete($artikel->gambar_artikel);
-        $artikel->update([
-            'judul' => $request->judul,
-            'body' => $request->body,
-            'slug' => Str::slug($request->judul),
-            'kategori_id' => $request->kategori_id,
-            'is_actived' => $request->is_actived,
-            'user_id' => Auth::id(),
-            'gambar_artikel' => $request->file('gambar_artikel')->store('artikel')
-        ]);
+    // Hapus gambar lama jika ada gambar baru
+    if ($request->hasFile('gambar_artikel')) {
+        // Hapus file lama dari folder public
+        if ($artikel->gambar_artikel && file_exists(public_path($artikel->gambar_artikel))) {
+            unlink(public_path($artikel->gambar_artikel));
+        }
+
+        $file = $request->file('gambar_artikel');
+        $filename = time() . '_' . $file->getClientOriginalName();
+        $file->move(public_path('uploads/artikel'), $filename);
+        $artikel->gambar_artikel = 'uploads/artikel/' . $filename;
     }
 
-    // 🚨 Tambahkan ini untuk menyimpan relasi tag
+    $artikel->update([
+        'judul' => $request->judul,
+        'body' => $request->body,
+        'slug' => Str::slug($request->judul),
+        'kategori_id' => $request->kategori_id,
+        'is_actived' => $request->is_actived,
+        'user_id' => Auth::id(),
+        'gambar_artikel' => $artikel->gambar_artikel // jika tidak berubah, tetap pakai yang lama
+    ]);
+
     if ($request->has('tags')) {
         $artikel->tags()->sync($request->tags);
     }
@@ -150,6 +156,7 @@ public function store(Request $request)
     Alert::success('Berhasil', 'Artikel Berhasil Diupdate');
     return redirect()->route('artikel.index')->with('success', 'Artikel berhasil diedit.');
 }
+
 
 
     /**

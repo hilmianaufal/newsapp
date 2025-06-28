@@ -63,7 +63,7 @@
                                                             <span class="badge bg-warning text-white">Draft</span>
                                                         @endif
                                                     </td>
-                                                    <td><img src="{{ asset('uploads/' . $ply->gambar_materi) }}" alt="" width="90"></td>
+                                                    <td><img src="{{ asset($ply->gambar_materi) }}" alt="" width="90"></td>
 													<td>
 														<div class="form-button-action">
                                                             <a type="button" href="{{ route('materi.edit', $ply->id) }}"  title="edit" class="btn btn-link btn-primary" >

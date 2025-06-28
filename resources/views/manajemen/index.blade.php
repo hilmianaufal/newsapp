@@ -61,7 +61,7 @@
 													<td>{{ $ply->no_hp }}</td>
 													<td>{{ \Carbon\Carbon::parse($ply->tanggal_lahir)->translatedFormat('d-F-Y') }}</td>
 													<td><span class="badge {{ $ply->role == "admin" ? "bg-success" : "bg-primary" }} text-white">{{ $ply->role == 'admin' ? 'Admin' : 'Penulis' }}</span></td>
-                                                    <td class="text-center "><img src="{{ asset('storage/' . $ply->avatar) }}" alt="" class="rounded-circle" width="50"></td>
+                                                    <td class="text-center "><img src="{{ asset($ply->avatar) }}" alt="" class="rounded-circle" width="50"></td>
 													<td>
 														<div class="form-button-action">
                                                             <a type="button" href="{{ route('manajemen.show', $ply->id) }}"  title="show" class="btn btn-link btn-primary" >

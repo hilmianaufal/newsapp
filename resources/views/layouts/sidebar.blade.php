@@ -4,7 +4,7 @@
             <!-- User Info -->
             <div class="user">
                 <div class="avatar-sm float-left mr-2">
-                    <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="User Image" class="avatar-img rounded-circle">
+                    <img src="{{ asset(Auth::user()->avatar) }}" alt="User Image" class="avatar-img rounded-circle">
                 </div>
                 <div class="info">
                     <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
@@ -25,11 +25,6 @@
                             <li>
                                 <a href="{{ route('user.edit', Auth::user()->id) }}">
                                     <span class="link-collapse">Edit Profile</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#settings">
-                                    <span class="link-collapse">Settings</span>
                                 </a>
                             </li>
                         </ul>

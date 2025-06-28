@@ -51,7 +51,7 @@
                                                 <div class="col-lg-6 col-md-6">
                                                     <div class="single-what-news mb-100">
                                                         <div class="what-img">
-                                                            <img src="{{ asset('uploads/' . $art->gambar_artikel) }}" alt="">
+                                                            <img src="{{ asset($art->gambar_artikel) }}" alt="">
                                                         </div>
                                                         <div class="what-cap">
                                                             <span class="color1">{{ $item->nama_kategori }}</span>
@@ -84,7 +84,7 @@
             <div class="card mb-3 border-0 shadow-sm small-news-card">
                 <div class="row g-0">
                     <div class="col-4" data-aos="fade-down">
-                        <img src="{{ asset('uploads/' . $berita->gambar_artikel) }}" class="img-fluid rounded-start" alt="{{ $berita->judul }}" data-aos="fade-down">
+                        <img src="{{ asset($berita->gambar_artikel) }}" class="img-fluid rounded-start" alt="{{ $berita->judul }}" data-aos="fade-down">
                     </div>
                     <div class="col-8" data-aos="fade-down">
                         <div class="card-body p-2">
@@ -109,7 +109,7 @@
     {{-- Poster Iklan --}}
     <div class="news-poster d-none d-lg-block" data-aos="fade-left">
         <a href="{{ $iklan->link }}">
-            <img src="{{ asset('uploads/' . $iklan->gambar_iklan) }}" alt="">
+            <img src="{{ asset($iklan->gambar_iklan) }}" alt="">
         </a>
     </div>
 </div>

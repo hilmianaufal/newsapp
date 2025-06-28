@@ -17,7 +17,7 @@
     <div class="col-lg-6 col-md-7">
         <div class="news-poster " data-aos="fade-up">
             <a href="{{ $iklan2->link }}">
-                <img src="{{ asset('uploads/' . $iklan2->gambar_iklan) }}"
+                <img src="{{ asset($iklan2->gambar_iklan) }}"
                      alt="Iklan"
                      class="w-100 rounded"
                      style="height: 90px; object-fit: cover;">

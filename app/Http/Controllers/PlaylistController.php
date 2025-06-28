@@ -47,22 +47,31 @@ class PlaylistController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        $this->validate($request,[
-        'judul_playlist' => 'required|min:4'
+{
+    $this->validate($request, [
+        'judul_playlist' => 'required|min:4',
+        'gambar_playlist' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
     ]);
 
     $data = $request->all();
     $data['slug'] = Str::slug($request->judul_playlist);
-    $data['gambar_playlist'] = $request->file('gambar_playlist')->store('playlist');
     $data['user_id'] = Auth::id();
     $data['deskripsi'] = $request->deskripsi;
     $data['is_active'] = 0;
-    // $data['is_actived'] = $request->is_actived;
+
+    // Simpan gambar langsung ke public/uploads/playlist
+    if ($request->hasFile('gambar_playlist')) {
+        $file = $request->file('gambar_playlist');
+        $filename = time() . '_' . $file->getClientOriginalName();
+        $file->move(public_path('uploads/playlist'), $filename);
+        $data['gambar_playlist'] = 'uploads/playlist/' . $filename;
+    }
+
     Playlist::create($data);
     Alert::success('Berhasil', 'Playlist Berhasil Ditambahkan');
-    return redirect()->route('playlist.index')->with('success', 'Artikel berhasil disimpan.');
-    }
+    return redirect()->route('playlist.index')->with('success', 'Playlist berhasil disimpan.');
+}
+
 
     /**
      * Display the specified resource.
@@ -94,38 +103,43 @@ class PlaylistController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        if (empty($request->file('gambar_playlist'))) {
+   public function update(Request $request, $id)
+{
+    $playlist = Playlist::find($id);
 
-            $playlist = Playlist::find($id);
-            $playlist->update([
-                'judul_playlist' => $request->judul_playlist,
-                'deskripsi' => $request->deskripsi,
-                'slug' => Str::slug($request->judul_playlist),
-                'is_active' => $request->is_active,
-                'user_id' => Auth::id()
-
-
-            ]);
-                Alert::success('Berhasil', 'Playlist Berhasil Diupdate');
-                return redirect()->route('playlist.index')->with('success', 'Playlist berhasil diedit.');
-        } else {
-                 $playlist = Playlist::find($id);
-                 Storage::delete($playlist->gambar_playlist);
-                 $playlist->update([
-                'judul_playlist' => $request->judul_playlist,
-                'deskripsi' => $request->deskripsi,
-                'slug' => Str::slug($request->judul_playlist),
-                'is_active' => $request->is_active,
-                'user_id' => Auth::id(),
-                'gambar_playlist' => $request->file('gambar_playlist')->store('playlist')
-
-            ]);
-            Alert::success('Berhasil', 'Playlist Berhasil Di Update');
-            return redirect()->route('playlist.index')->with('success', 'Playlist berhasil diedit.');
-        }
+    if (!$playlist) {
+        Alert::error('Gagal', 'Playlist tidak ditemukan');
+        return redirect()->route('playlist.index');
     }
+
+    // Jika ada file gambar baru
+    if ($request->hasFile('gambar_playlist')) {
+        // Hapus gambar lama jika ada
+        if ($playlist->gambar_playlist && file_exists(public_path($playlist->gambar_playlist))) {
+            unlink(public_path($playlist->gambar_playlist));
+        }
+
+        // Upload gambar baru
+        $file = $request->file('gambar_playlist');
+        $filename = time() . '_' . $file->getClientOriginalName();
+        $file->move(public_path('uploads/playlist'), $filename);
+        $playlist->gambar_playlist = 'uploads/playlist/' . $filename;
+    }
+
+    // Update field lainnya
+    $playlist->update([
+        'judul_playlist' => $request->judul_playlist,
+        'deskripsi' => $request->deskripsi,
+        'slug' => Str::slug($request->judul_playlist),
+        'is_active' => $request->is_active,
+        'user_id' => Auth::id(),
+        'gambar_playlist' => $playlist->gambar_playlist // pakai yang baru atau tetap lama
+    ]);
+
+    Alert::success('Berhasil', 'Playlist Berhasil Diupdate');
+    return redirect()->route('playlist.index')->with('success', 'Playlist berhasil diedit.');
+}
+
 
     /**
      * Remove the specified resource from storage.

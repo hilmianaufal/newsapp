@@ -15,7 +15,7 @@
 
           <!-- Gambar Berita -->
           <h1 class="news-title">{{ $artikel->judul }}</h1>
-          <img src="{{ asset('uploads/'. $artikel->gambar_artikel) }}"
+          <img src="{{ asset($artikel->gambar_artikel) }}"
                alt="{{ $artikel->judul }}"
                class="img-fluid rounded mb-4 artikel-image"
                style="width: 100%; height: 400px; object-fit: cover;" />
@@ -57,7 +57,7 @@
             <div class="carousel-inner">
               @foreach ($artikels as $index => $art)
               <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
-              <a href="/detail/{{ $art->slug }}">  <img src="{{ asset('uploads/' . $art->gambar_artikel) }}" class="d-block w-100 rounded" style="height: 300px; object-fit: cover;" alt="{{ $art->judul }}"></a>
+              <a href="/detail/{{ $art->slug }}">  <img src="{{ asset($art->gambar_artikel) }}" class="d-block w-100 rounded" style="height: 300px; object-fit: cover;" alt="{{ $art->judul }}"></a>
                 <div class="carousel-caption d-none d-md-block">
                  <h5>{!! $art->judul !!}</h5>
                   <p>{!! \Illuminate\Support\Str::limit($art->body, 100) !!}</p>
@@ -113,7 +113,7 @@
 
           @foreach($artikels as $recent)
           <div class="card mb-3">
-           <a href="/detail/{{ $recent->slug }}"> <img src="{{ asset('uploads/' . $recent->gambar_artikel) }}" class="card-img-top" alt="{{ $recent->judul }}"></a>
+           <a href="/detail/{{ $recent->slug }}"> <img src="{{ asset($recent->gambar_artikel) }}" class="card-img-top" alt="{{ $recent->judul }}"></a>
             <div class="card-body p-2">
               <a href="/detail/{{ $recent->slug }}" style="text-decoration: none; color: black;">
                     <h6 class="card-title mb-1">{{ $recent->judul }}</h6>

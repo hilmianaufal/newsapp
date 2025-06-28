@@ -12,7 +12,7 @@
             <div class="row">
                 {{-- Foto Profil --}}
                 <div class="col-md-3 text-center">
-                    <img src="{{ $user->avatar ? asset('storage/' . $user->avatar) : asset('default-avatar.png') }}"
+                    <img src="{{ $user->avatar ? asset($user->avatar) : asset('default-avatar.png') }}"
                          class="img-fluid rounded-circle mb-3" alt="Avatar" style="max-width: 150px;">
                 </div>
 

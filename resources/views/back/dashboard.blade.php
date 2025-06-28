@@ -237,7 +237,7 @@
         <h2 class="card-title-lg">Playlist Videos</h2>
         @foreach ($jmlVideo as $item)
         <article class="list-item">
-          <img src="{{ asset('uploads/' . $item->gambar_playlist) }}" alt="Thumbnail" />
+          <img src="{{ asset($item->gambar_playlist) }}" alt="Thumbnail" />
           <div class="content">
             <h3 class="title">{{ $item->judul_materi }}</h3>
             <p class="meta">
@@ -251,10 +251,10 @@
       </section>
 
       <section class="card content-card" aria-label="Uploaded Articles">
-        <h2 class="card-title-lg">Uploaded Articles Terbaru</h2>
+        <h2 class="card-title-lg">Uploaded Artikel Terbaru</h2>
         @foreach ($artTerbaru as $item)
         <article class="list-item">
-          <img src="{{ asset('uploads/' . $item->gambar_artikel) }}" alt="{{ $item->slug }}" />
+          <img src="{{ asset($item->gambar_artikel) }}" alt="{{ $item->slug }}" />
           <div class="content">
             <h3 class="title">{{ $item->judul }}</h3>
             <p class="meta">
