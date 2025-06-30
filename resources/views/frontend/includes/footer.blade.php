@@ -10,17 +10,17 @@
                     {{-- </a> --}}
                 </div>
                 <p class="small mb-2 text-white">
-                    Kami menyediakan artikel terbaru dan terpercaya untuk Anda. Kunjungi kami dan dapatkan informasi terbaik.
+                    {{ $setings->slogan }}
                 </p>
                 <ul class="list-unstyled small">
-                    <li><i class="fas fa-map-marker-alt me-2 text-warning"></i> Jl. Urip Sumoharjo No.18</li>
+                    <li><i class="fas fa-map-marker-alt me-2 text-warning"></i>{{ $setings->alamat }}</li>
                     <li><i class="fas fa-phone-alt me-2 text-warning"></i> 087724345243  </li>
-                    <li><i class="fas fa-envelope me-2 text-warning"></i> pondokkeboncinta@gmail.com</li>
+                    <li><i class="fas fa-envelope me-2 text-warning"></i> {{ $setings->email }}</li>
                 </ul>
                 <div class="footer-social mt-3">
-                    <a href="#"><i class="fab fa-facebook-f text-light me-3"></i></a>
-                    <a href="#"><i class="fab fa-instagram text-light me-3"></i></a>
-                    <a href="#"><i class="fab fa-twitter text-light"></i></a>
+                    <a href="{{ $setings->facebook }}"><i class="fab fa-facebook-f text-light me-3"></i></a>
+                    <a href="{{ $setings->instagram }}"><i class="fab fa-instagram text-light me-3"></i></a>
+                    <a href="{{ $setings->youtube }}"><i class="fab fa-youtube text-light"></i></a>
                 </div>
             </div>
 
@@ -57,7 +57,7 @@
 
         <div class="row">
             <div class="col-md-6 small">
-                <p class="mb-0">&copy; {{ now()->year }} All rights reserved. Developed by <a href="#" class="text-warning">Hilmi An Naufal</a></p>
+                <p class="mb-0">&copy; {{ now()->year }} All rights reserved. Developed by <a href="#" class="text-warning">{{ $setings->copyright }}</a></p>
             </div>
             <div class="col-md-6 text-md-end small">
                 <a href="#" class="text-light me-3">Terms</a>

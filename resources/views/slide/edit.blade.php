@@ -21,7 +21,7 @@
                         </div>
                         <div class="form-group mb-3">
                             <label for="body">URL</label>
-                            <textarea name="link" cols="30" value="" id="konten" rows="10" class="form-control">{{ $slide->link }}</textarea>
+                             <input type="text" name="link" value="{!! $slide->link !!}" class="form-control" id="link" placeholder="Masukan Judul Slide" required>
                         </div>
                          <div class="form-group mb-3">
                             <label for="gambar">Gambar </label>

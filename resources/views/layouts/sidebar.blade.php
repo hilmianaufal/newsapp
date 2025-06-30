@@ -121,6 +121,13 @@
                                             <span class="caret"></span>
                                         </a>
                                     </li>
+                                    <li class="nav-item {{ Request::is('settings') ? 'active' : '' }}">
+                                        <a href="{{ route('settings.edit') }}">
+                                            <i class="fas fa-flip fa-gear"></i>
+                                            <p>Settings</p>
+                                            <span class="caret"></span>
+                                        </a>
+                                    </li>
                 @endcan
             </ul>
         </div>

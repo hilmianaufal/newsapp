@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\User;
+use App\Models\Setting;
 use Illuminate\Auth\Access\Gate;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Gate as admin;
@@ -29,5 +30,8 @@ class AppServiceProvider extends ServiceProvider
         admin::define('admin', function(User $user){
             return $user->role === 'admin';
         });
+        view()->composer('*', function ($view) {
+        $view->with('setting', Setting::first());
+    });
     }
 }

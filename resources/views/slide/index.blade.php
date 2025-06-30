@@ -53,7 +53,7 @@
 												<tr>
                                                     <td>{{ $loop->iteration }}</td>
 													<td>{{ $ply->judul_slide }}</td>
-													<td>{{ $ply->link }}</td>
+													<td>{!! $ply->link !!}</td>
                                                     <td class="text-center">
 													 @if ($ply->status == 1)
                                                             <span class="badge bg-success text-white">Active</span>

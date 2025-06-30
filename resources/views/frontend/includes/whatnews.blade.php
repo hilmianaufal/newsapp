@@ -51,11 +51,11 @@
                                                 <div class="col-lg-6 col-md-6">
                                                     <div class="single-what-news mb-100">
                                                         <div class="what-img">
-                                                            <img src="{{ asset($art->gambar_artikel) }}" alt="">
+                                                          <a href="/detail/{{ $art->slug }}">  <img src="{{ asset($art->gambar_artikel) }}" alt=""> </a>
                                                         </div>
                                                         <div class="what-cap">
                                                             <span class="color1">{{ $item->nama_kategori }}</span>
-                                                            <h4><a href="{{ route('artikel.show', $art->slug) }}">{{ $art->judul }}</a></h4>
+                                                            <h4><a href="/detail/{{ $art->slug }}">{{ $art->judul }}</a></h4>
                                                         </div>
                                                     </div>
                                                 </div>

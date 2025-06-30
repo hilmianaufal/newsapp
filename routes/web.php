@@ -11,6 +11,7 @@ use App\Http\Controllers\SlideController;
 use App\Http\Controllers\MateriController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ArtikelController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\KomentarController;
@@ -69,6 +70,9 @@ Route::middleware('auth')->group(function(){
     Route::get('/pesan', [PesanController::class, 'index'])->name('pesan.index');
     Route::get('/pesan/riwayat', [PesanController::class, 'riwayat'])->name('pesan.riwayat');
     Route::delete('/pesan/{id}/hapus', [PesanController::class, 'hapus'])->name('pesan.hapus');
+    Route::get('/admin/settings', [SettingController::class, 'edit'])->name('settings.edit');
+    Route::post('/settings', [SettingController::class, 'update'])->name('settings.update');
+
 
 });
 

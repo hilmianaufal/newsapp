@@ -89,22 +89,22 @@
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
     <div class="container">
-      <a class="navbar-brand fw-bold text-primary" href="/">KebonCintaNet</a>
+      <a class="navbar-brand" href="/">
+      <img src="{{ asset($setting->logo ?? 'default-logo.png') }}" alt="Logo" height="40">
+       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarContent">
         <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
           <li class="nav-item"><a class="nav-link active" href="/">Beranda</a></li>
-           <li class="nav-item">
-          <a class="nav-link" href="/kategori/pendidikan-islam">Pendidikan</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/kategori/beasiswa">Beasiswa</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/kategori/khazanah">Khazanah</a>
-        </li>
+           <li class="nav-item"><a class="nav-link" href="/kategori/berita">Berita</a></li>
+        <li class="nav-item"><a class="nav-link" href="/kategori/pendidikan">Pendidikan</a></li>
+        <li class="nav-item"><a class="nav-link" href="/kategori/khazanah">Khazanah</a></li>
+        <li class="nav-item"><a class="nav-link" href="/kategori/prestasi">Prestasi</a></li>
+        <li class="nav-item"><a class="nav-link" href="/kategori/teknologi">Teknologi</a></li>
+        <li class="nav-item"><a class="nav-link" href="/kategori/parenting">Parenting</a></li>
+        <li class="nav-item"><a class="nav-link" href="/kategori/beasiswa">Beasiswa</a></li>
 
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Kategori</a>
@@ -161,12 +161,12 @@
                     {{-- </a> --}}
                 </div>
                 <p class="small mb-2 text-white">
-                    Kami menyediakan artikel terbaru dan terpercaya untuk Anda. Kunjungi kami dan dapatkan informasi terbaik.
+                    {{ $setting->slogan }}
                 </p>
                 <ul class="list-unstyled small">
-                    <li><i class="fas fa-map-marker-alt me-2 text-warning"></i> Jl. Urip Sumoharjo No.18</li>
-                    <li><i class="fas fa-phone-alt me-2 text-warning"></i> 087724345243  </li>
-                    <li><i class="fas fa-envelope me-2 text-warning"></i> pondokkeboncinta@gmail.com</li>
+                    <li><i class="fas fa-map-marker-alt me-2 text-warning"></i> {{ $setting->alamat }}</li>
+                    <li><i class="fas fa-phone-alt me-2 text-warning"></i> {{ $setting->no_hp }}  </li>
+                    <li><i class="fas fa-envelope me-2 text-warning"></i> {{ $setting->email }}</li>
                 </ul>
                 <div class="footer-social mt-3">
                     <a href="#"><i class="fab fa-facebook-f text-light me-3"></i></a>
@@ -208,7 +208,7 @@
 
         <div class="row">
             <div class="col-md-6 small">
-                <p class="mb-0">&copy; {{ now()->year }} All rights reserved. Developed by <a href="#" class="text-warning">Hilmi An Naufal</a></p>
+                <p class="mb-0">&copy; {{ now()->year }} All rights reserved. Developed by <a href="#" class="text-warning">{{ $setting->copyright }}</a></p>
             </div>
             <div class="col-md-6 text-md-end small">
                 <a href="#" class="text-light me-3">Terms</a>
